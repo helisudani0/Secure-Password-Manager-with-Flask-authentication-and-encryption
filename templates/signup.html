@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}Create Account{% endblock %}
+
+{% block content %}
+<div class="auth-wrapper">
+  <div class="auth-card">
+
+    <h3>Create your account</h3>
+    <p class="auth-subtext">
+      End-to-end encrypted credential vault · Zero-trust architecture
+    </p>
+
+    <form method="POST" novalidate>
+      <input type="email" name="email" placeholder="Email address" required>
+      <input type="text" name="username" placeholder="Username" required>
+      <input type="password" name="password" placeholder="Master password" required>
+
+      <button type="submit">Create account</button>
+    </form>
+
+    <div class="auth-footer">
+      Already have an account?
+      <a href="{{ url_for('login') }}">Log in</a>
+    </div>
+
+  </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+{% block title %}Vault{% endblock %}
+
+{% block content %}
+<div class="dashboard">
+
+  <div class="dash-header">
+    <div>
+      <h1 class="dash-title">SECURE VAULT</h1>
+      <p class="dash-sub">ENCRYPTED · ZERO TRUST · LOCAL ONLY</p>
+    </div>
+
+    <a href="{{ url_for('add_password') }}" class="primary-action">
+      ADD CREDENTIAL
+    </a>
+  </div>
+
+  {% if passwords %}
+  <div class="vault-grid">
+
+    {% for p in passwords %}
+    <div class="vault-card">
+
+      <div class="vault-top">
+        <span class="vault-site">{{ p.website }}</span>
+        <span class="vault-cat">{{ p.category or "GENERAL" }}</span>
+      </div>
+
+      <div class="vault-password">
+        <span class="vault-mask" id="mask-{{ p.id }}">••••••••••••</span>
+        <span class="vault-real hidden" id="real-{{ p.id }}">{{ p.password }}</span>
+      </div>
+
+      <div class="vault-actions">
+        <button class="vault-btn"
+                onclick="reveal('{{ p.id }}')">
+          REVEAL
+        </button>
+
+        <button class="vault-btn"
+                onclick="copySecret('{{ p.id }}')">
+          COPY
+        </button>
+
+        <form method="POST"
+              action="{{ url_for('delete_password', id=p.id) }}">
+          <button type="submit"
+                  class="vault-btn danger"
+                  onclick="return confirm('Permanently purge this credential? This cannot be undone.')">
+            PURGE
+          </button>
+
+        </form>
+      </div>
+
+      <div class="vault-time">
+        LAST UPDATED · {{ p.last_updated }}
+      </div>
+
+    </div>
+    {% endfor %}
+
+  </div>
+  {% else %}
+    <div class="vault-empty">
+      <p>VAULT EMPTY</p>
+      <span>No credentials stored</span>
+    </div>
+  {% endif %}
+
+</div>
+{% endblock %}

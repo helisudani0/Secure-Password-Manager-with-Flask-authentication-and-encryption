@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-end mb-3">
+  <a href="/add" class="btn btn-success">Add New Password</a>
+</div>
+<div class="row row-cols-1 row-cols-md-3 g-4">
+  {% for p in passwords %}
+  <div class="col">
+    <div class="card h-100 shadow-sm">
+      <div class="card-body">
+        <h5 class="card-title">{{ p.website }}</h5>
+        <p class="card-text"><code id="pwd-{{p.id}}">{{ p.password }}</code></p>
+        {% if p.category %}<p class="text-muted">{{ p.category }}</p>{% endif %}
+        <button class="btn btn-outline-success btn-sm copy-btn" data-id="{{p.id}}">Copy</button>
+        <a href="/delete/{{ p.id }}" class="btn btn-outline-danger btn-sm">Delete</a>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% endblock %}
